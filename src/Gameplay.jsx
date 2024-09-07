@@ -116,7 +116,7 @@ function PlayerCard({ player, winner }) {
     >
       <h3 className="font-medium">
         {player.name} {player.totalScore >= 200 ? "💩" : ""}{" "}
-        {player.name === winner.name ? "✨" : ""}
+        {player.name === winner.name ? "🥇" : ""}
       </h3>
       <p>score: {player.totalScore}</p>
       <p>wins: {player.wins}</p>
