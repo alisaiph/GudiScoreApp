@@ -17,9 +17,10 @@ function Start() {
     navigate("/");
   }
 
+  // ADD PLAYERS
   return (
-    <div className="flex flex-col items-center justify-center gap-5 w-[22rem] h-[25rem]">
-      <h1 className="text-[2.5rem] font-bold">Add Players 🎮</h1>
+    <div className="flex flex-col items-center gap-5 w-full h-lvh p-5 mt-20">
+      <h1 className="text-[2.5rem] font-bold text-center">Add Players 🎮</h1>
 
       {/* FORM */}
       <form className="flex flex-col gap-3 w-[100%]">
@@ -32,13 +33,15 @@ function Start() {
         </div>
 
         {/* BUTTONS */}
-        <div className="flex flex-col gap-2 mt-5">
-          <button
-            onClick={(e) => handleAddPlayers(e)}
-            className="bg-yellow-400 w-[100%] text-xl font-semibold px-3 py-5 rounded-lg"
-          >
-            + Add more
-          </button>
+        <div className="flex flex-col gap-2 mt-2">
+          {players.length < 6 && (
+            <button
+              onClick={(e) => handleAddPlayers(e)}
+              className="bg-yellow-400 w-[100%] text-xl font-semibold px-3 py-5 rounded-lg"
+            >
+              + Add more
+            </button>
+          )}
 
           <button
             onClick={handleStart}
@@ -60,28 +63,34 @@ function Start() {
 }
 
 function PlayerForm() {
-  const { playerName, setPlayerName } = usePlayersContext();
+  const { players, playerName, setPlayerName } = usePlayersContext();
 
   return (
     <div>
-      <label htmlFor="playerName" className="font-medium">
-        Player Name:
-      </label>
-      <br />
-      <input
-        placeholder="Player name"
-        value={playerName}
-        onChange={(e) => setPlayerName(e.target.value)}
-        type="text"
-        id="playerName"
-        className="w-[100%] p-2 bg-slate-200 rounded-md"
-      />
+      {players.length < 6 && (
+        <>
+          <label htmlFor="playerName" className="font-medium">
+            Player Name:
+          </label>
+          <br />
+          <input
+            placeholder="Player name"
+            value={playerName}
+            onChange={(e) => setPlayerName(e.target.value)}
+            type="text"
+            id="playerName"
+            className="w-[100%] p-2 bg-slate-200 rounded-md"
+          />
+        </>
+      )}
     </div>
   );
 }
 
 function PlayerNames({ playerName }) {
-  return <span className="bg-blue-500 font-medium p-2 mb-5 rounded-md">{playerName}</span>;
+  return (
+    <span className="bg-slate-600 text-white font-medium p-2 mb-5 rounded-md">{playerName}</span>
+  );
 }
 
 export default Start;

@@ -12,7 +12,7 @@ function PlayersProvider({ children }) {
 
     const newPlayer = {
       name: playerName,
-      currScore: 0,
+      currScore: "",
       totalScore: 0,
       wins: 0,
       lost: false,
@@ -56,7 +56,7 @@ function PlayersProvider({ children }) {
       players.map((player) => {
         return {
           ...player,
-          currScore: 0,
+          currScore: "",
         };
       })
     );
