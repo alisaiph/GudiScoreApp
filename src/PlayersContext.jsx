@@ -44,7 +44,7 @@ function PlayersProvider({ children }) {
       players.map((player) => {
         return {
           ...player,
-          totalScore: player.totalScore + player.currScore, // update totalScore of all objects
+          totalScore: player.totalScore + Number(player.currScore), // update totalScore of all objects
         };
       })
     );

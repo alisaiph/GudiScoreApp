@@ -21,25 +21,23 @@ function Gameplay() {
   }
 
   function handleAddWin() {
-    if (activePlayers.length > 1) return; // if no winner, dont execute
-    console.log(`${winner.name} won!`);
-
-    // setPlayers((players) =>
-    //   players.map((player) => {
-    //     if (player.name === winner.name) {
-    //       return {
-    //         ...player,
-    //         wins: player.wins + 1,
-    //       };
-    //     } else {
-    //       return player;
-    //     }
-    //   })
-    // );
+    setPlayers((players) =>
+      players.map((player) => {
+        if (player.name === winner.name) {
+          return {
+            ...player,
+            wins: player.wins + 1,
+          };
+        } else {
+          return player;
+        }
+      })
+    );
   }
 
   function handleNextGame() {
     setNumMatch((num) => num + 1);
+    handleAddWin(); // set winner
 
     // reset all players back (activePlayers reset too, meaning no winner as well)
     setPlayers((players) =>
@@ -126,16 +124,21 @@ function PlayerCard({ player, winner }) {
         <p>
           score: <span className="font-medium">{player.totalScore}</span>
         </p>
-        {/* <p>
+        <p>
           wins: <span className="font-medium">{player.wins}</span>
-        </p> */}
+        </p>
       </div>
 
       <progress
         value={player.totalScore}
         max={200}
-        className={`[&::-webkit-progress-bar]:rounded-full [&::-webkit-progress-bar]:bg-slate-200 [&::-webkit-progress-value]:rounded-full [&::-webkit-progress-value]:${
-          player.totalScore < 150 ? "bg-green-600" : "bg-red-600"
+        className={`[&::-webkit-progress-bar]:appearance-none [&::-webkit-progress-bar]:rounded-full [&::-webkit-progress-bar]:bg-slate-200 [&::-webkit-progress-value]:appearance-none [&::-webkit-progress-value]:rounded-full ${
+          player.totalScore >= 150
+            ? "[&::-webkit-progress-value]:bg-red-600"
+            : player.totalScore >= 100 && player.totalScore < 150
+            ? "[&::-webkit-progress-value]:bg-yellow-500"
+            : "[&::-webkit-progress-value]:bg-green-600"
+        }
         }`}
       ></progress>
     </div>
@@ -189,7 +192,7 @@ function PlayerScore({ player, onCurrScore }) {
 
 function Winner({ children }) {
   return (
-    <div className="bg-blue-500 h-[7rem] flex items-center justify-center text-center rounded-lg">
+    <div className="bg-blue-500 text-white h-[7rem] flex items-center justify-center text-center rounded-lg">
       <h1 className="font-medium text-2xl">{children}</h1>
     </div>
   );
